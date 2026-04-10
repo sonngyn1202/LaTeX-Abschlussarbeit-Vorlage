@@ -24,5 +24,5 @@ siehe https://www.latex-project.org/get/
 - Verzeichnisse
 - Abkürzungen
 
-# Falls ihr noch etwas erklärt haben wollt in der Anleitung, dann könnt ihr mir gerne eine Mail schreiben unter son.nguyen@student.hswt.de
+Falls ihr noch etwas erklärt haben wollt in der Anleitung, könnt ihr mir einfach eine Mail schreiben unter son.nguyen@student.hswt.de
 
