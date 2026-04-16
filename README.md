@@ -3,7 +3,7 @@
 Musterprojekt zur Erstellung einer Abschlussarbeit mit LaTeX über VS Code.  
 Die Vorlage orientiert sich an den Formalien der **HSWT (Stand 2026)**.
 
-> Ich bin kein LaTeX-Profi – diese Vorlage soll lediglich den Einstieg erleichtern und zeigen, dass es mit etwas Geduld machbar ist.
+> Diese Vorlage soll lediglich den Einstieg erleichtern und zeigen, dass es mit etwas Geduld machbar ist.
 
 ---
 
