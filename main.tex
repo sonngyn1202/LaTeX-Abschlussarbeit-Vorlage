@@ -1,0 +1,203 @@
+\documentclass[12pt,a4paper,numbers=noenddot]{scrreprt}
+% scrreprt = KOMA-Script Klasse für wissenschaftliche Berichte/Abschlussarbeiten
+% 12pt       = Schriftgröße
+% a4paper    = DIN A4-Format
+% numbers=noenddot = kein Punkt nach Gliederungsnummern (1.1 statt 1.1.)
+
+% ============================================================
+%  SPRACHE & ZEICHENKODIERUNG
+% ============================================================
+\usepackage[T1]{fontenc}        % T1-Zeichensatz: korrekte Silbentrennung & Ausgabe europäischer Zeichen
+\usepackage[ngerman]{babel}     % Deutsche Sprachregeln: Silbentrennung, Bezeichnungen (z.B. "Inhaltsverzeichnis")
+\usepackage{csquotes}           % Typografisch korrekte Anführungszeichen; Pflicht für biblatex + babel
+
+% ============================================================
+%  MATHEMATIK
+% ============================================================
+\usepackage{amsmath}            % Erweiterte Mathe-Umgebungen: align, cases, matrix etc.
+\usepackage{amsfonts}           % Mathematische Schriftarten: \mathbb{R}, \mathbb{N} etc.
+\usepackage{amssymb}            % Zusätzliche Mathe-Symbole: \leq, \geq, \infty etc.
+\usepackage[version=4]{mhchem}  % Chemische Formeln und Reaktionsgleichungen: \ce{H2O}
+
+% ============================================================
+%  SCHRIFT & LAYOUT
+% ============================================================
+\usepackage{newtxtext}          % Times New Roman-basierte Schrift (Fließtext) – klassisch für Abschlussarbeiten
+\usepackage{newtxmath}          % Passende Mathe-Schrift zu newtxtext
+\usepackage{geometry}           % Seitenränder und Seitenlayout konfigurieren
+\usepackage{setspace}           % Zeilenabstand: \onehalfspacing, \doublespacing etc.
+\usepackage[bottom]{footmisc}   % Fußnoten immer am Seitenende platzieren (nicht am Textende)
+
+% ============================================================
+%  GRAFIKEN & FARBE
+% ============================================================
+\usepackage{graphicx}           % Bilder einfügen: \includegraphics[width=...]{pfad}
+\usepackage{xcolor}             % Farben definieren und verwenden: \color{}, \textcolor{}
+\usepackage{float}              % Gleitumgebungen kontrollieren: [H] = genau hier platzieren
+\usepackage{rotating}           % Tabellen oder Abbildungen um 90 Grad drehen: \begin{sideways}
+
+% ============================================================
+%  TABELLEN
+% ============================================================
+\usepackage{array}              % Erweiterte Spaltenformate in Tabellen (z.B. >{\centering})
+\usepackage{tabularx}           % Tabellen mit automatisch breiten Spalten (X-Spaltentyp)
+\usepackage{booktabs}           % Professionelle Tabellenlinien: \toprule, \midrule, \bottomrule
+\usepackage{longtable}          % Tabellen, die über mehrere Seiten gehen (z.B. Abkürzungsverzeichnis)
+
+% ============================================================
+%  CODE & LISTINGS
+% ============================================================
+\usepackage{listings}           % Quellcode-Blöcke mit Syntax-Highlighting einbinden
+\usepackage{verbatim}           % Rohtextausgabe ohne Formatierung: \begin{verbatim}
+
+% ============================================================
+%  LITERATUR & VERWEISE
+% ============================================================
+\usepackage[
+  style=ieee,                   % Zitierstil: IEEE (numerisch, z.B. [1]) – alternativ: apa, authoryear
+  backend=biber,                % Verarbeitungs-Engine (moderner und leistungsfähiger als BibTeX)
+  sorting=none                  % Sortierung = Reihenfolge des Zitierens im Text
+]{biblatex}
+\addbibresource{Literaturverzeichnis.bib}  % Pfad zur BibTeX-Datei mit allen Quellen
+
+\usepackage{hyperref}           % Klickbare Links und PDF-Lesezeichen; immer als letztes Paket laden
+\usepackage{url}                % Saubere URL-Formatierung: \url{https://...}
+
+% ============================================================
+%  SONSTIGES
+% ============================================================
+\usepackage{pdfpages}           % Externe PDFs einbinden: \includepdf[pages=-]{datei.pdf}
+\KOMAoptions{listof=totoc}      % Abbildungs- und Tabellenverzeichnis ins Inhaltsverzeichnis aufnehmen
+\usepackage{acronym}            % Abkürzungsverzeichnis
+% ============================================================
+%  SEITENRAENDER
+%  HSWT-Anforderung: links 3 cm (Heftrand), rechts/oben/unten 2,5 cm
+% ============================================================
+\geometry{left=3cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% ============================================================
+%  ZEILENABSTAND & FUSSNOTENFORMAT
+% ============================================================
+\onehalfspacing                                        % 1,5-facher Zeilenabstand (HSWT-Standard)
+\renewcommand{\footnotesize}{\fontsize{9}{11}\selectfont}
+\setlength{\footnotesep}{0.5cm}
+
+% ============================================================
+%  UEBERSCHRIFTFORMATIERUNG
+% ============================================================
+\setkomafont{chapter}{\normalfont\bfseries\Huge}
+\setkomafont{section}{\normalfont\bfseries\Large}
+\setkomafont{subsection}{\normalfont\bfseries\normalsize}
+
+% ============================================================
+%  FARBEN FUER CODE-LISTINGS
+% ============================================================
+\definecolor{keywordcolor}{rgb}{0.0, 0.0, 0.6}        % Blau fuer Schluesselwoerter
+\definecolor{stringcolor}{rgb}{0.8, 0.0, 0.0}         % Rot fuer Strings
+\definecolor{commentcolor}{rgb}{0.0, 0.6, 0.0}        % Gruen fuer Kommentare
+\definecolor{backgroundcolor}{rgb}{0.98, 0.98, 0.98}  % Hellgrauer Hintergrund
+
+% ============================================================
+%  CODE-LISTING-STIL (Standard: Bash)
+% ============================================================
+\lstset{
+  language=bash,
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{backgroundcolor},
+  frame=single,                   % Rahmen um den Code-Block
+  breaklines=true,                % Automatischer Zeilenumbruch bei langen Zeilen
+  showstringspaces=false,         % Leerzeichen in Strings nicht markieren
+  keywordstyle=\color{keywordcolor}\bfseries,
+  stringstyle=\color{stringcolor},
+  commentstyle=\color{commentcolor}\itshape,
+  numbers=left,                   % Zeilennummern am linken Rand
+  numberstyle=\tiny\color{gray},
+}
+
+% ============================================================
+%  TIPP: EINZELNE KAPITEL KOMPILIEREN (spart Zeit bei langen Arbeiten)
+%  \includeonly{Dateiname} in der PRAAMBEL einfuegen – LaTeX verarbeitet
+%  dann nur dieses Kapitel, behaelt aber alle Seitenzahlen und Referenzen.
+%
+%  Beispiel: nur die Einleitung kompilieren:
+%  \includeonly{01_Einleitung}
+%
+%  Mehrere Kapitel:
+%  \includeonly{01_Einleitung,02_Kapitel}
+%
+%  Zum Deaktivieren einfach die Zeile auskommentieren.
+% ============================================================
+%\includeonly{01_Einleitung}
+% ============================================================
+%  DECKBLATT – muss vor \begin{document} eingebunden werden
+% ============================================================
+\include{0_Deckblatt}
+
+% ============================================================
+%  DOKUMENTBEGINN
+% ============================================================
+\begin{document}
+
+% --- Vorspann: roemische Seitenzahlen (I, II, III, ...) ---
+\pagenumbering{Roman}
+\maketitle
+
+\include{Zusammenfassung}
+% \include{Abstract}   % Englische Kurzfassung – bei Bedarf einkommentieren
+
+\tableofcontents       % Inhaltsverzeichnis automatisch generieren
+\cleardoublepage
+
+\include{Abkürzungsverzeichnis}
+\cleardoublepage
+
+\listoffigures         % Abbildungsverzeichnis
+\cleardoublepage
+
+\listoftables          % Tabellenverzeichnis
+\cleardoublepage
+
+% --- Hauptteil: arabische Seitenzahlen (1, 2, 3, ...) ---
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{01_Einleitung}
+\include{02_Kapitel}
+% \include{03_WeiteresKapitel}    % weitere Kapitel hier ergaenzen
+
+% ============================================================
+%  ANHANG
+% ============================================================
+\appendix
+\chapter{Anhangtitel (Beispiel mit Code)}
+\label{anh:beispiel}
+
+\begin{lstlisting}[language=Python]
+# Einfaches Python-Beispiel
+
+def greet(name):
+    return f"Hallo, {name}!"
+
+names = ["Alice", "Bob", "Charlie"]
+
+for name in names:
+    print(greet(name))
+\end{lstlisting}
+
+% ============================================================
+%  LITERATURVERZEICHNIS
+% ============================================================
+\printbibliography[heading=bibintoc]
+% heading=bibintoc sorgt dafuer, dass das Literaturverzeichnis im Inhaltsverzeichnis erscheint
+
+% ============================================================
+%  EIGENSTAENDIGKEITS- & ZUGAENGLICHKEITSERKLAERUNG
+%  PDF in den Projektordner legen und Pfade anpassen.
+% ============================================================
+% \cleardoublepage
+% \includepdf[pages=-]{Eigenstaendigkeitserklaerung.pdf}
+
+% \cleardoublepage
+% \includepdf[pages=-]{Zugaenglichkeitserklaerung.pdf}
+
+\end{document}

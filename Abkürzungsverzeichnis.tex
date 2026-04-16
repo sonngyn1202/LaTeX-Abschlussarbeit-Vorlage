@@ -1,0 +1,46 @@
+\chapter*{Abkürzungsverzeichnis}
+\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+% \chapter* erzeugt eine Überschrift OHNE Nummerierung
+% \addcontentsline sorgt dennoch dafür, dass sie im Inhaltsverzeichnis erscheint
+
+% ============================================================
+%  VARIANTE 1: Manuell (einfach, aber bei Änderungen aufwändig)
+% ============================================================
+% Einfach weitere Zeilen nach dem Muster "KÜRZEL & Bedeutung \\" ergänzen.
+
+%\begin{longtable}{@{}p{3cm}p{12cm}@{}}
+%API     & Application Programming Interface \\
+%HSWT    & Hochschule Weihenstephan-Triesdorf \\
+%KI      & Künstliche Intelligenz \\
+%PDF     & Portable Document Format \\
+% ... weitere Abkürzungen hier ergänzen
+%\end{longtable}
+
+
+
+% ============================================================
+%  VARIANTE 2: Automatisiert mit dem acronym-Paket (empfohlen)
+% ============================================================
+% Vorteile:
+%  - Jede Abkürzung nur einmal definieren
+%  - Beim ersten Auftreten im Text wird automatisch "Langform (Kurzform)" ausgegeben
+%  - Danach erscheint nur noch die Kurzform
+%
+% Schritt 1: Paket in main.tex laden:
+%   \usepackage{acronym}
+%
+% Schritt 2: Abkürzungen hier definieren:
+%
+\begin{acronym}
+    \acro{KI}{Künstliche Intelligenz}
+    \acro{HSWT}{Hochschule Weihenstephan-Triesdorf}
+    \acro{API}{Application Programming Interface}
+\end{acronym}
+%
+% Schritt 3: Im Fließtext verwenden:
+%   \ac{KI}   -> erstes Vorkommen: "Künstliche Intelligenz (KI)"
+%             -> danach automatisch: "KI"
+%
+% Möchte man die Langform nochmal erzwingen: \acf{KI}
+% Nur die Kurzform:                          \acs{KI}
+% Nur die Langform:                          \acl{KI}

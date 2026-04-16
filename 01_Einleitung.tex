@@ -1,0 +1,351 @@
+%!TEX root = ../main.tex
+% Dieses Kommentar oben verlinkt die Datei mit der Hauptdatei – noetig fuer VS Code / LaTeX Workshop.
+
+\chapter{Einleitung}
+
+Diese Vorlage zeigt, wie man eine Abschlussarbeit mit \textbf{LaTeX} schreibt.
+Sie entstand aus der praktischen Erfahrung beim Verfassen einer Abschlussarbeit an der HSWT und soll den Einstieg erleichtern.
+
+LaTeX ist kein WYSIWYG-Editor wie Word.
+Man schreibt Text mit Befehlen, und LaTeX übernimmt das Layout automatisch.
+Das klingt zunächst umständlich, zahlt sich aber aus: Inhaltsverzeichnis, Literatur, Abbildungsnummern – alles wird automatisch aktualisiert.
+
+% ============================================================
+\section{Schnellstart}
+% ============================================================
+
+\begin{enumerate}
+    \item Repository als ZIP herunterladen oder klonen.
+    \item VS Code öffnen und die Extensions installieren (siehe Abschnitt~\ref{sec:voraussetzungen}).
+    \item \texttt{main.tex} öffnen und mit \textbf{Strg+Alt+B} (Windows/Linux) bzw. \textbf{Cmd+Alt+B} (Mac) kompilieren oder auf dem grünen Pfeil oben rechts drücken.
+    \item Das fertige PDF erscheint automatisch im selben Ordner.
+\end{enumerate}
+
+% ============================================================
+\section{Voraussetzungen}
+\label{sec:voraussetzungen}
+% ============================================================
+
+\subsection{Windows}
+\begin{itemize}
+    \item \textbf{MiKTeX} – LaTeX-Distribution; installiert fehlende Pakete beim ersten Kompilieren automatisch nach.
+    \item \textbf{Strawberry Perl} – wird von MiKTeX intern benötigt.
+    \item \textbf{VS Code} + Extension \textit{LaTeX Workshop}.
+\end{itemize}
+
+\subsection{macOS}
+\begin{itemize}
+    \item \textbf{MacTeX} – enthält alles, inkl. Perl (auf macOS vorinstalliert).
+    \item \textbf{VS Code} + Extension \textit{LaTeX Workshop}.
+\end{itemize}
+
+Weitere Installationshinweise: \url{https://www.latex-project.org/get/}
+
+\subsection{Optionale Extension}
+\begin{itemize}
+    \item \textbf{Zotero LaTeX} – bindet den Literaturverwaltungsdienst Zotero direkt in VS Code ein.
+    Wer Zotero nicht nutzt, kann diese Extension ignorieren und Quellen manuell in die \texttt{.bib}-Datei eintragen.
+\end{itemize}
+
+% ============================================================
+\section{Projektstruktur}
+\label{sec:struktur}
+% ============================================================
+
+Alle Dateien eines LaTeX-Projekts liegen in \textbf{einem Hauptordner}.
+Die empfohlene Struktur dieser Vorlage:
+
+\begin{verbatim}
+Meine_Abschlussarbeit/
+|-- main.tex                  <- Hauptdatei (Einstiegspunkt)
+|-- 0_Deckblatt.tex
+|-- Zusammenfassung.tex
+|-- Abkürzungsverzeichnis.tex
+|-- 01_Einleitung.tex
+|-- 02_Kapitel.tex
+|-- Literaturverzeichnis.bib  <- alle Quellen
+|-- Bilder/                   <- alle Abbildungen
+\-- Anhang/                   <- optionale Anhangdateien
+\end{verbatim}
+
+Jedes Kapitel bekommt eine eigene \texttt{.tex}-Datei.
+In \texttt{main.tex} werden diese Dateien über \texttt{\textbackslash include\{Dateiname\}} eingebunden.
+So behält man den Überblick, auch bei langen Arbeiten.
+
+% ============================================================
+\section{Die Präambel (main.tex)}
+\label{sec:praambel}
+% ============================================================
+
+Alles in \texttt{main.tex} \textbf{vor} \texttt{\textbackslash begin\{document\}} heißt \textbf{Präambel}.
+Hier werden Seitenformat, Schrift, Sprache und Zusatzfunktionen (Pakete) global festgelegt.
+Eine Änderung in der Präambel wirkt sich sofort auf das gesamte Dokument aus.
+
+Pakete werden mit \texttt{\textbackslash usepackage\{paketname\}} geladen.
+In der mitgelieferten \texttt{main.tex} ist jedes Paket kommentiert, sodass klar ist, wofür es verwendet wird.
+\\ % mit \\ kann man Abbildungen etc. positionieren, sodass diese bei zwei Seiten nicht geteilt werden und vollständig auf einer Seite sind
+\\
+\\
+\\
+\\
+% ============================================================
+\section{Abbildungen einfügen}
+\label{sec:abbildungen}
+% ============================================================
+
+Bilder werden mit der \texttt{figure}-Umgebung eingebunden:
+
+\begin{lstlisting}[language=tex]
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Bilder/meinbild.png}
+    \caption{Beschreibung der Abbildung}
+    \label{fig:meinbild}
+\end{figure}
+\end{lstlisting}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Bilder/HSWT LOGO.png}
+    \caption{Bsp: HSWT Logo}
+    \label{fig:HSWTLogo}
+\end{figure}
+
+\textbf{Hinweise:}
+\begin{itemize}
+    \item \texttt{[h!]} platziert die Abbildung möglichst genau an dieser Stelle (\textit{here}).
+    Alternativ: \texttt{[H]} (aus dem \texttt{float}-Paket) erzwingt die Position absolut.
+    \item \texttt{width=0.8\textbackslash textwidth} skaliert das Bild auf 80\,\% der Textbreite.
+    \item \texttt{\textbackslash caption\{\}} ist die Bildunterschrift – erscheint automatisch im Abbildungsverzeichnis.
+    \item \texttt{\textbackslash label\{fig:meinbild\}} vergibt einen internen Namen für Querverweise.
+    \item Im Fließtext verweist man darauf mit \texttt{\textbackslash ref\{fig:meinbild\}} (ergibt z.\,B. \enquote{Abbildung~1.1}).
+\end{itemize}
+
+\textbf{Empfehlung für Labels:} Nutze kurze Präfixe, um den Typ schnell zu erkennen:
+\texttt{fig:} für Abbildungen, \texttt{tab:} für Tabellen, \texttt{sec:} für Abschnitte, \texttt{anh:} für Anhänge.
+
+% ============================================================
+\section{Tabellen erstellen}
+\label{sec:tabellen}
+% ============================================================
+
+Für wissenschaftliche Tabellen empfiehlt sich die Kombination aus \texttt{tabularx} (flexible Spaltenbreiten) und \texttt{booktabs} (professionelle Linien):
+\\
+\\
+\\
+\\
+\begin{lstlisting}[language=tex]
+\begin{table}[h!]
+\centering
+\caption{Beispieltabelle}
+\label{tab:meintabelle}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Spalte 1} & \textbf{Spalte 2} & \textbf{Spalte 3} \\
+\midrule
+Wert A & Wert B & Wert C \\
+Wert D & Wert E & Wert F \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{lstlisting}
+
+\textbf{Spaltentypen in tabularx:}
+\begin{itemize}
+    \item \texttt{l} – linksbündig, feste Breite (Inhalt bestimmt Breite)
+    \item \texttt{c} – zentriert, feste Breite
+    \item \texttt{r} – rechtsbündig, feste Breite
+    \item \texttt{X} – linksbündig, füllt den verfügbaren Platz automatisch aus (mehrere X teilen sich den Raum)
+\end{itemize}
+
+Ein Beispiel mit vier Spalten (Tabelle~\ref{tab:beispiel_vierspaltig}):
+
+\begin{table}[h!]
+\centering
+\caption{Beispiel einer 4-spaltigen Tabelle}
+\label{tab:beispiel_vierspaltig}
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Spalte 1} & \textbf{Spalte 2} & \textbf{Spalte 3} & \textbf{Spalte 4} \\
+\midrule
+Eintrag 1 & Eintrag 2 & Eintrag 3 & Eintrag 4 \\
+\addlinespace
+Eintrag 5 & Eintrag 6 & Eintrag 7 & Eintrag 8 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%====================================================
+\section{Zitieren und Literaturverzeichnis}
+\label{sec:literatur}
+% ============================================================
+
+Alle Quellen kommen in die Datei \texttt{Literaturverzeichnis.bib}.
+Ein typischer Eintrag sieht so aus:
+
+\begin{lstlisting}[language=tex]
+@article{mustermann2024,
+  author  = {Mustermann, Max},
+  title   = {Titel des Artikels},
+  journal = {Name der Zeitschrift},
+  year    = {2024},
+  volume  = {12},
+  pages   = {34--56},
+}
+\end{lstlisting}
+
+Im Text zitiert man mit \texttt{\textbackslash cite\{mustermann2024\}}, was im IEEE-Stil die Ausgabe \texttt{[1]} erzeugt \cite{Muster2025}.
+Das vollständige Literaturverzeichnis wird am Ende des Dokuments mit \texttt{\textbackslash printbibliography} eingefügt.
+
+\textbf{Tipp:} Zotero kann Einträge direkt als \texttt{.bib}-Datei exportieren, oder man nutzt die VS-Code-Extension \textit{Zotero LaTeX} für noch nahtlosere Integration.
+
+% ============================================================
+\section{Abkürzungsverzeichnis}
+\label{sec:abkuerzungen}
+% ============================================================
+
+Es gibt zwei Wege – manuell oder automatisiert.
+
+\textbf{Manuell} (einfacher Einstieg): Einträge direkt in \texttt{Abkürzungsverzeichnis.tex} als Tabelle eintippen.
+
+\textbf{Automatisiert mit dem \texttt{acronym}-Paket} (empfohlen):
+Einmalig in \texttt{Abkürzungsverzeichnis.tex} definieren:
+
+\begin{lstlisting}[language=tex]
+\begin{acronym}
+    \acro{KI}{Kuenstliche Intelligenz}
+    \acro{HSWT}{Hochschule Weihenstephan-Triesdorf}
+\end{acronym}
+\end{lstlisting}
+
+Im Fließtext dann \texttt{\textbackslash ac\{KI\}} verwenden.
+Beim \textbf{ersten Auftreten} gibt LaTeX automatisch \enquote{Künstliche Intelligenz (KI)} aus, danach nur noch \enquote{KI}.
+
+Beispiel: Die \ac{KI} hat in den letzten Jahren stark an Bedeutung gewonnen.
+Viele Anwendungen nutzen eine \ac{API}, um auf \ac{KI}-Dienste zuzugreifen.
+Die Weiterentwicklung der \ac{KI} schreitet rasant voran.
+Die \ac{HSWT} ist in Freising. Die \ac{HSWT}....
+
+% ============================================================
+\section{Formeln}
+\label{sec:formeln}
+% ============================================================
+
+Inline-Formeln stehen zwischen \texttt{\$...\$}, z.\,B. ergibt \texttt{\$E = mc\^{}2\$} die Ausgabe $E = mc^2$.
+
+Freigestellte, nummerierte Formeln verwendet man mit der \texttt{equation}-Umgebung:
+
+\begin{lstlisting}[language=tex]
+\begin{equation}
+    \label{eq:energie}
+    E = mc^2
+\end{equation}
+\end{lstlisting}
+
+Das ergibt:
+\begin{equation}
+    \label{eq:energie}
+    E = mc^2
+\end{equation}
+
+Mit \texttt{\textbackslash ref\{eq:energie\}} kann man auf Gleichung~(\ref{eq:energie}) verweisen.
+Für mehrzeilige Formeln eignet sich die \texttt{align}-Umgebung aus dem \texttt{amsmath}-Paket.
+
+% ============================================================
+\section{Quellcode einfügen}
+\label{sec:code}
+% ============================================================
+
+Kürzere Code-Ausschnitte im Fließtext setzen mit \texttt{\textbackslash texttt\{code\}}.
+Für längere Blöcke nutzt man die \texttt{lstlisting}-Umgebung:
+
+\begin{lstlisting}[language=tex]
+\begin{lstlisting}[language=Python]
+def hello(name: str) -> str:
+    return f"Hallo, {name}!"
+
+print(hello("Welt"))
+\ end{lstlisting}          % Backslash nur fuer dieses Beispiel noetig
+\end{lstlisting}
+
+Mit \texttt{language=} kann die Programmiersprache angegeben werden (Python, C, Java, bash etc.).
+Den Standard-Stil (Farben, Rahmen, Zeilennummern) stellt man einmalig in der Präambel über \texttt{\textbackslash lstset\{\}} ein.
+
+% ============================================================
+\section{Deckblatt}
+\label{sec:deckblatt}
+% ============================================================
+
+Das Deckblatt ist in \texttt{0\_Deckblatt.tex} definiert.
+Dort Titel, Name, Studiengang, Matrikelnummer, Prüfer und Abgabedatum eintragen.
+Das Deckblatt muss in \texttt{main.tex} \textbf{vor} \texttt{\textbackslash begin\{document\}} eingebunden werden – das ist bereits so vorbereitet.
+
+% ============================================================
+\section{Zusammenfassung und Abstract}
+\label{sec:zusammenfassung}
+
+Die Zusammenfassung wird in \texttt{Zusammenfassung.tex} geschrieben und über
+\texttt{\textbackslash include\{Zusammenfassung\}} in \texttt{main.tex} eingebunden --
+genau wie jedes andere Kapitel. Für eine englische Kurzfassung (Abstract) einfach
+eine zweite Datei \texttt{Abstract.tex} anlegen und analog einbinden.
+
+\texttt{\textbackslash includeonly} muss zwingend in der \textbf{Präambel} stehen
+(vor \texttt{\textbackslash begin\{document\}}), nicht im Dokumentkörper.
+Damit lassen sich einzelne Kapitel gezielt kompilieren -- nützlich, wenn man nur
+an einem Abschnitt arbeitet und nicht das gesamte Dokument neu bauen möchte:
+
+\begin{lstlisting}[language=tex]
+% Nur die Einleitung kompilieren:
+\includeonly{01_Einleitung}
+
+% Mehrere Kapitel:
+\includeonly{01_Einleitung,02_Kapitel}
+
+% Zum Deaktivieren einfach auskommentieren.
+\end{lstlisting}
+
+Seitenzahlen und Querverweise aus den nicht kompilierten Kapiteln bleiben dabei
+korrekt erhalten -- LaTeX verhält sich so, als wären alle Kapitel vorhanden.
+
+% ============================================================
+\section{Formalien: Eigenständigkeitserklärung}
+\label{sec:formalien}
+% ============================================================
+
+Die Eigenständigkeitserklärung (und ggf. Zugänglichkeitserklärung) als PDF in den Projektordner legen.
+In \texttt{main.tex} am Ende des Dokuments einbinden:
+
+\begin{lstlisting}[language=tex]
+\cleardoublepage
+\includepdf[pages=-]{Eigenstaendigkeitserklaerung.pdf}
+\end{lstlisting}
+
+\texttt{pages=-} bindet alle Seiten der PDF ein.
+
+% ============================================================
+\section{Tipps und häufige Probleme}
+\label{sec:tipps}
+% ============================================================
+
+\subsection{hbox overfull}
+Wenn LaTeX beim Kompilieren meldet \enquote{Overfull \textbackslash hbox}, ragt Text über den Rand hinaus.
+Ursachen und Lösungen:
+\begin{itemize}
+    \item Langes Wort ohne Trennmöglichkeit: Manuellen Trennvorschlag hinzufügen: \texttt{Ener\-gie\-ver\-sor\-gung}
+    \item Langen URL in Fließtext: \texttt{\textbackslash url\{\}} verwenden – das Paket \texttt{url} bricht URLs automatisch um.
+    \item Als letztes Mittel: \texttt{\textbackslash sloppy} am Anfang des Absatzes (lockert Zeilenumbruchsregeln).
+\end{itemize}
+
+\subsection{Kompilierungsfehler}
+\begin{itemize}
+    \item \textbf{Fehlende Pakete (MiKTeX):} MiKTeX bietet beim ersten Kompilieren an, fehlende Pakete automatisch nachzuinstallieren – einfach bestätigen.
+    \item \textbf{Biber/Literaturverzeichnis erscheint nicht:} Mindestens \textbf{zweimal} kompilieren. LaTeX braucht zwei Durchläufe, um Referenzen aufzulösen.
+    \item \textbf{Querverweise zeigen ??:} Ebenfalls zweimal kompilieren – beim ersten Lauf schreibt LaTeX die Labels, beim zweiten liest er sie.
+    \item \textbf{Fehlermeldung lesen:} LaTeX-Fehlermeldungen sind präzise. Die Zeilennummer im Output zeigt genau, wo das Problem liegt.
+\end{itemize}
+
+\subsection{KI-Unterstützung}
+LLMs (ChatGPT, Gemini, Claude) sind nützliche Helfer für LaTeX: Syntax-Fehler erklären lassen, Code-Schnipsel generieren oder Fehlermeldungen diagnostizieren.
+\textbf{Tipp:} Den Prompt mit den verwendeten Paketen ergänzen, z.\,B. \enquote{Ich verwende tabularx und booktabs – wie erstelle ich eine Tabelle mit...}.
+Das liefert direkt kompatiblen Code, ohne dass man die Pakete nachinstallieren oder anpassen muss.
+
